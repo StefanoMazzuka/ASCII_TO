@@ -29,11 +29,21 @@ MOVEMENTS = {
     LEFT:  (0, -1),
     RIGHT: (0, 1)
 }
-SPRITES = {
+
+# SPRITES
+# ҉҈◌▸▾◂☺☼
+PLAYER_SPRITES = {
     UP:    '|',
     DOWN:  '|',
     LEFT:  'q',
     RIGHT: 'p'
+}
+ENEMY_SPRITES = {
+    UP:    '▴',
+    DOWN:  '▾',
+    LEFT:  '◂',
+    RIGHT: '▸',
+    'PROJECTILE': '҉'
 }
 
 # ITEMS

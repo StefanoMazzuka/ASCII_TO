@@ -1,9 +1,6 @@
-import field as f
-import menu
 import utils
 import keyboard
 
-from PIL import Image
 from position import Position
 from constants import *
 
@@ -48,42 +45,7 @@ def play(map, inventory):
             elif key == EXIT:
                 break
 
-
-def image_to_ascii(image_path, width=195):
-    # Open the image
-    image = Image.open(image_path)
-
-    # Resize the image
-    aspect_ratio = image.height / image.width
-    new_height = int(aspect_ratio * width)
-    image = image.resize((width, new_height))
-
-    # Convert the image to grayscale
-    image = image.convert('L')
-
-    # Define ASCII characters
-    ascii_chars = "@%#*+=-:. "
-
-    # Convert pixels to ASCII characters
-    pixels = image.getdata()
-    ascii_str = ""
-    for pixel in pixels:
-        ascii_str += ascii_chars[pixel // 32]
-
-    # Split the string into lines
-    ascii_str_len = len(ascii_str)
-    ascii_img = "\n".join([ascii_str[i:(i + width)] for i in range(0, ascii_str_len, width)])
-
-    return ascii_img
 def main():
-
-    image_path = 'images/foto_perfil.jpg'
-    # Convert image to ASCII
-    ascii_image = image_to_ascii(image_path)
-
-    # Print the ASCII image
-    print(ascii_image)
-
     map = Map(20, 10)
     map.insert_element(Position(2, 2), Element(WALL, collision=True))
     map.insert_element(Position(4, 2), Element(HEART, pickable=True))

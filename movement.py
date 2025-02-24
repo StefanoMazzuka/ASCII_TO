@@ -1,7 +1,6 @@
 from entity import Entity
 from position import Position
 
-
 class Movement:
     def __init__(self, entity: Entity, direction):
         value_y = entity.get_position().y + direction[0]

@@ -1,5 +1,9 @@
+from entity import Entity
+from position import Position
+
+
 class Movement:
-    UP    = (-1, 0)
-    DOWN  = (1, 0)
-    LEFT  = (0, -1)
-    RIGHT = (0, 1)
+    def __init__(self, entity: Entity, direction):
+        value_y = entity.get_position().y + direction[0]
+        value_x = entity.get_position().x + direction[1]
+        self.position = Position(value_y, value_x)

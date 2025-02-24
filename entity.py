@@ -1,9 +1,9 @@
 from constants import PLAYER
 from element import Element
 
-class Player(Element):
-    def __init__(self, position):
-        super().__init__(PLAYER)
+class Entity(Element):
+    def __init__(self, skin, position):
+        super().__init__(skin)
         self.position = position
 
     def get_position(self):

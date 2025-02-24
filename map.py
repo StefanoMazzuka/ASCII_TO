@@ -1,8 +1,8 @@
 from position import Position
-from constants import EMPTY
+from constants import EMPTY, PLAYER
 
 from element import Element
-from player import Player
+from entity import Entity
 
 class Map:
     def __init__(self, width, height):
@@ -11,7 +11,7 @@ class Map:
         self.matrix       = [[Element(EMPTY) for _ in range(width)] for _ in range(height)]
         self.last_element = Element(EMPTY)
 
-        self.player = Player(Position(int(height / 2), int(width / 2)))
+        self.player = Entity(PLAYER, Position(int(height / 2), int(width / 2)))
         self.matrix[self.player.position.y][self.player.position.x] = self.player
 
     def size(self):

@@ -1,8 +1,7 @@
-from position import Position
-from constants import EMPTY, PLAYER
+from constants import EMPTY
+from position  import Position
+from element   import Element
 
-from element import Element
-from entity import Entity
 
 class Map:
     def __init__(self, width, height):
@@ -12,48 +11,43 @@ class Map:
         self.last_element = Element(EMPTY)
 
         self.center_position = Position(int(height / 2), int(width / 2))
-        self.player          = Entity(PLAYER, self.center_position)
 
-        self.add_element(self.player)
+    def add_element(self, element, position):
+        """Insert an element in the map."""
+        if position is None:
+            position = self.center_position
 
-    def add_element(self, element):
-        self.matrix[element.position.y][element.position.x] = element
+        if self.out_of_bounds(position):
+            position = self.adjust_position_within_bounds(position)
 
-    def size(self):
+        self.matrix[position.y][position.x] = element
+
+    def get_size(self):
         return self.width, self.height
 
-    def print_top(self):
+    def _print_top(self):
         print("┏" + "━" * (self.width) + "┓")
 
-    def print_bottom(self):
+    def _print_bottom(self):
         print("┗" + "━" * (self.width) + "┛")
 
     def show(self):
-        self.print_top()#█◘░▒▓█
+        """Print the map."""
+        self._print_top()
         for row in self.matrix:
             print("┃" + "".join(str(element.skin) for element in row) + "┃")
-        self.print_bottom()
+        self._print_bottom()
 
     def out_of_bounds(self, position):
-        return not (0 <= (self.player.position.y + position.y) < self.height and 0 <= (self.player.position.x + position.x) < self.width)
+        """Check if the position is out of bounds."""
+        return not (0 <= position.y < self.height and 0 <= position.x < self.width)
 
-    def update_player_position(self, position, ):
-        self.matrix[self.player.position.y][self.player.position.x] = p
+    def adjust_position_within_bounds(self, position):
+        """Adjust the position to be within the bounds of the map."""
+        adjusted_position_y = position.y = max(0, min(position.y, self.height - 1))
+        adjusted_position_x = position.x = max(0, min(position.x, self.width - 1))
 
-        next_position = self.player.position + position
-        next_element  = self.get_element(next_position)
-
-        if not next_element.collision:
-            self.matrix[self.player.position.y][self.player.position.x] = self.last_element
-
-            self.player.position.x = max(0, min(self.player.position.x + position.x, self.width - 1))
-            self.player.position.y = max(0, min(self.player.position.y + position.y, self.height - 1))
-
-            self.last_element = self.get_element(self.player.position)
-            self.matrix[self.player.position.y][self.player.position.x] = p
-
-    def insert_element(self, position, element):
-        self.matrix[position.y][position.x] = element
+        return Position(adjusted_position_y, adjusted_position_x)
 
     def get_element(self, position):
         return self.matrix[position.y][position.x]

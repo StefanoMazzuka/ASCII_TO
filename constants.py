@@ -11,7 +11,6 @@ ITEM_4 = '4'
 ITEM_5 = '5'
 
 # CHARACTERS
-PLAYER = 'p'
 EMPTY  = ' '
 WALL   = '█'
 FLOOR  = '░'
@@ -22,12 +21,15 @@ HEART  = '♥'
 # NUMBERS
 NUM_ITEMS = 5
 
-# MOVEMENTS
-MOVEMENTS = {
-    UP:    (-1, 0),
-    DOWN:  (1, 0),
-    LEFT:  (0, -1),
-    RIGHT: (0, 1)
+# DIRECTIONS
+DIRECTIONS = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+
+# PLAYER_MOVEMENTS
+PLAYER_MOVEMENTS = {
+    UP:    DIRECTIONS[0],
+    DOWN:  DIRECTIONS[1],
+    LEFT:  DIRECTIONS[2],
+    RIGHT: DIRECTIONS[3]
 }
 
 # SPRITES

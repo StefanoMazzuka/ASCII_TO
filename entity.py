@@ -1,13 +1,9 @@
-from constants import PLAYER
+from constants import EMPTY
 from element import Element
 
+
 class Entity(Element):
-    def __init__(self, skin, position):
+    def __init__(self, skin, sprites):
         super().__init__(skin)
-        self.position = position
-
-    def get_position(self):
-        return self.position
-
-    def get_next_position(self, movement):
-        return self.position + movement
+        self.sprites   = sprites
+        self.on_top_of = Element(EMPTY)

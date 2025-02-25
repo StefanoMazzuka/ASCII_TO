@@ -15,6 +15,8 @@ def play(level, inventory):
     utils.clear_console()
     level.show()
     inventory.show()
+    for k in level.elements:
+        print(f"{k}: {level.elements[k].y}, {level.elements[k].x}")
 
     while True:
         start_time = time.time()

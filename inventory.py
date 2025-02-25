@@ -7,13 +7,13 @@ class Inventory:
         self.items = [Element(EMPTY)] * NUM_ITEMS
         self.selected_item = 0
 
-    def add_item(self, index, element):
+    def add_item(self, index: int, element: Element):
         self.items[index] = element
 
-    def remove_item(self, element):
+    def remove_item(self, element: Element):
         self.items.remove(element)
 
-    def get_items(self):
+    def get_items(self) -> list[Element]:
         return self.items
 
     def show(self):

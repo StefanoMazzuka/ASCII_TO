@@ -2,40 +2,46 @@ from constants import PLAYER_SPRITES, ENEMY_SPRITES, RIGHT, WALL
 from element import Element
 from entity import Entity
 from map import Map
+from position import Position
 
 
 class Level:
     def __init__(self):
-        self.map             = None
-        self.entities        = []
-        self.player_position = None
+        self.map      = None
+        self.elements = []
+        self.player   = None
 
-    def create_map(self, width, height):
+    def create_map(self, width: int, height: int):
         self.map = Map(width, height)
 
-    def _add_element(self, element, position=None):
+    def _add_element(self, element_class, *args, **kwargs) -> Element:
+        position = self.map.adjust_position_within_bounds(kwargs.get("position"))
+        element = element_class(*args, position=position, **kwargs)
         self.map.add_element(element, position)
-        self.entities.append(element)
+        self.elements[element.id] = position
 
-    def add_player(self, position=None):
-        player = Entity(skin=PLAYER_SPRITES[RIGHT], sprites=PLAYER_SPRITES)
-        self._add_element(player, position)
-        self.player
+        return element
 
-    def add_enemy(self, position=None):
-        enemy = Entity(skin=ENEMY_SPRITES[RIGHT], sprites=ENEMY_SPRITES)
+    def add_player(self, position: Position=None):
+        self._add_element(Entity, PLAYER_SPRITES[RIGHT], PLAYER_SPRITES, position)
+
+    def add_enemy(self, position: Position=None):
+        position = self.map.adjust_position_within_bounds(position)
+        enemy = Entity(ENEMY_SPRITES[RIGHT], ENEMY_SPRITES, position)
         self._add_element(enemy, position)
 
-    def add_structure(self, structure_name, position=None):
-        structure = Element(skin=structure_name, collision=True)
+    def add_structure(self, structure_name: chr, position: Position=None):
+        position = self.map.adjust_position_within_bounds(position)
+        structure = Element(structure_name, position, collision=True)
         self._add_element(structure, position)
 
-    def add_item(self, item_name, position=None):
-        item = Element(skin=item_name, pickable=True)
+    def add_item(self, item_name: chr, position=None):
+        position = self.map.adjust_position_within_bounds(position)
+        item = Element(item_name, position, pickable=True)
         self._add_element(item, position)
 
-    def move_player(self, direction):
-        player = self.entities[0]
+    def move_player(self, direction: tuple[int, int]):
+        player = self.entities[]
         next_position = player.position + direction
 
         if not self.map.out_of_bounds(next_position):

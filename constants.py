@@ -10,6 +10,8 @@ ITEM_3 = '3'
 ITEM_4 = '4'
 ITEM_5 = '5'
 
+BUTTONS = [UP, DOWN, LEFT, RIGHT, EXIT, ITEM_1, ITEM_2, ITEM_3, ITEM_4, ITEM_5]
+
 # CHARACTERS
 EMPTY  = ' '
 WALL   = '█'

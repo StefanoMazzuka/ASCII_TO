@@ -11,19 +11,20 @@ from position import Position
 
 def play(level, inventory):
 
-    frame_duration = 1 / 60  # Duration of each frame for 60fps
+    frame_duration = 1 / 30  # Duration of each frame for 30fps
     utils.clear_console()
     level.show()
     inventory.show()
-    for k in level.elements:
-        print(f"{k}: {level.elements[k].y}, {level.elements[k].x}")
 
     while True:
         start_time = time.time()
 
         for key in PLAYER_MOVEMENTS:
             if keyboard.is_pressed(key):
-                print(key)
+                level.move_player(key)
+                utils.clear_console()
+                level.show()
+                inventory.show()
 
         for key in ITEMS:
             if keyboard.is_pressed(key):
@@ -69,16 +70,21 @@ def play(level, inventory):
         # Sleep for the remaining time to maintain 60fps
         time.sleep(max(0, frame_duration - elapsed_time))
 
+def block_keys():
+    for key in BUTTONS:
+        keyboard.block_key(key)
+
 def main():
+    block_keys()
     level_1 = Level()
-    level_1.create_map(width=20, height=10)
+    level_1.create_map(width=100, height=10)
     level_1.add_player()
     level_1.add_enemy(Position(1, 1))
     level_1.add_structure(WALL, Position(2, 2))
     level_1.add_structure(WALL, Position(3, 2))
     level_1.add_item(HEART, Position(1, 6))
-    level_1.add_structure(FLOOR, Position(4, 5))
-    level_1.add_structure(FLOOR, Position(5, 5))
+    level_1.add_structure(FLOOR, Position(4, 5), collition=False)
+    level_1.add_structure(FLOOR, Position(5, 5), collition=False)
     inventory = Inventory()
     play(level_1, inventory)
 

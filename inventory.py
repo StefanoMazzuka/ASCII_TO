@@ -4,7 +4,7 @@ from element import Element
 
 class Inventory:
     def __init__(self):
-        self.items = [Element(EMPTY)] * NUM_ITEMS
+        self.items = [EMPTY] * NUM_ITEMS
         self.selected_item = 0
 
     def add_item(self, index: int, element: Element):
@@ -18,14 +18,14 @@ class Inventory:
 
     def show(self):
         top, mid, bottom = "", "", ""
-        for i, element in enumerate(self.items):
+        for i, item in enumerate(self.items):
             if i == self.selected_item:
                 top += "╔═══╗"
-                mid += f"║ {element.skin} ║"
+                mid += f"║ {item} ║"
                 bottom += "╚═══╝"
             else:
                 top += "┌───┐"
-                mid += f"│ {element.skin} │"
+                mid += f"│ {item} │"
                 bottom += "└───┘"
 
         print(top)

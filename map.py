@@ -1,6 +1,6 @@
 from constants import EMPTY
-from position  import Position
-from element   import Element
+from position import Position
+from element import Element
 
 
 class Map:
@@ -11,11 +11,9 @@ class Map:
 
         self.center_position = Position(int(height / 2), int(width / 2))
 
-    def add_element(self, element: Element, position: Position) -> Position:
+    def add_element(self, element: Element, position: Position):
         """Insert an element in the map and return the position."""
         self.matrix[position.y][position.x] = element
-
-        return position
 
     def get_size(self) -> tuple[int, int]:
         return self.width, self.height

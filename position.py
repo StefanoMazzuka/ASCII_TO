@@ -1,6 +1,3 @@
-from django.core.exceptions import NON_FIELD_ERRORS
-
-
 class Position:
     def __init__(self, y: int, x: int):
         self.y = y

@@ -24,7 +24,7 @@ HEART  = '♥'
 NUM_ITEMS = 5
 
 # DIRECTIONS
-DIRECTIONS = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+DIRECTIONS = [(-1, 0), (1, 0), (0, -1), (0, 1), (0, 0)]
 
 # PLAYER_MOVEMENTS
 PLAYER_MOVEMENTS = {
@@ -43,12 +43,15 @@ PLAYER_SPRITES = {
     RIGHT: 'p'
 }
 ENEMY_SPRITES = {
-    UP:    '▴',
-    DOWN:  '▾',
-    LEFT:  '◂',
-    RIGHT: '▸',
-    'PROJECTILE': '҉'
+    DIRECTIONS[0]: '▴',
+    DIRECTIONS[1]: '▾',
+    DIRECTIONS[2]: '◂',
+    DIRECTIONS[3]: '▸'
 }
+
+# ENTITY TYPES
+ENEMY = 0
+NPC = 1
 
 # ITEMS
 ITEMS = {

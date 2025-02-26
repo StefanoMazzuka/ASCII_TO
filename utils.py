@@ -4,8 +4,10 @@ import threading
 import time
 import sys
 
+
 def clear_console():
     os.system('cls' if os.name == 'nt' else 'clear')
+
 
 def loading_animation(loading_event):
     for c in itertools.cycle(['|', '/', '-', '\\']):
@@ -15,6 +17,7 @@ def loading_animation(loading_event):
         sys.stdout.flush()
         time.sleep(0.1)
     sys.stdout.write('\rDone!  \n')
+
 
 def exe_loading_animation():
     loading_event = threading.Event()

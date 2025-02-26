@@ -17,24 +17,32 @@ def update_view(level, inventory):
 
 def play(level, inventory):
     update_view(level, inventory)
-    frame_duration = 1 / 10  # Duration of each frame for 10fps
-    enemy_velocity = 1
-    player_velocity = 0.25
-    enemy_start_time = time.time()
-    player_start_time = time.time()
+
+    enemy_speed  = 1.0
+    player_speed = 4.0
+
+    last_time = time.perf_counter()
+
+    enemy_accumulator = 0
+    player_accumulator = 0
 
     while True:
-        current_time = time.time()
+        current_time = time.perf_counter()
+        delta_time = current_time - last_time
+        last_time = current_time
 
-        if current_time - enemy_start_time >= enemy_velocity:
+        enemy_accumulator  += delta_time
+        player_accumulator += delta_time
+
+        if enemy_accumulator >= 1 / enemy_speed:
             level.move_enemies()
-            enemy_start_time = current_time
+            enemy_accumulator = 0
 
-        if current_time - player_start_time >= player_velocity:
+        if player_accumulator >= 1 / player_speed:
             for key in PLAYER_MOVEMENTS:
                 if keyboard.is_pressed(key):
                     level.move_player(key)
-                    player_start_time = current_time
+                    player_accumulator = 0
 
         for key in ITEMS:
             if keyboard.is_pressed(key):
@@ -44,10 +52,6 @@ def play(level, inventory):
             break
 
         update_view(level, inventory)
-
-        # Calculate the time taken for this frame
-        elapsed_time = time.time() - current_time
-        time.sleep(max(0, int(frame_duration - elapsed_time)))
 
 
 def block_keys():

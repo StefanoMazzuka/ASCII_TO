@@ -19,10 +19,10 @@ class Map:
         return self.width, self.height
 
     def _print_top(self):
-        return "┏" + "━" * self.width + "┓"
+        return "┏" + "━" * self.width + "┓" + "\n"
 
     def _print_bottom(self):
-        return "┗" + "━" * self.width + "┛"
+        return "┗" + "━" * self.width + "┛" + "\n"
 
     def __str__(self):
         """Print the map."""

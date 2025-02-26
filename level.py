@@ -53,6 +53,7 @@ class Level:
             self.map.add_element(self.player.on_top_of, self.player.position)
             self.player.position = next_position
             self.map.add_element(self.player, self.player.position)
+
             if not element.pickable:
                 self.player.on_top_of = element
 
@@ -65,9 +66,11 @@ class Level:
                 if direction in ENEMY_SPRITES:
                     element.skin = ENEMY_SPRITES[direction]
                     self.map.add_element(element, element.position)
+
                     next_position = element.position + direction
                     next_position = self.map.adjust_position_within_bounds(next_position)
-                    next_element = self.map.get_element(next_position)
+                    next_element  = self.map.get_element(next_position)
+
                     if not next_element.collision:
                         self.map.add_element(element.on_top_of, element.position)
                         element.position = next_position

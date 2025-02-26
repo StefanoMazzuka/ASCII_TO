@@ -36,6 +36,9 @@ def play(level, inventory):
 
         # Calculate the time taken for this frame
         elapsed_time = time.time() - start_time
+        print(elapsed_time)
+        print(frame_duration)
+        print(max(0, int(frame_duration - elapsed_time)))
         time.sleep(max(0, int(frame_duration - elapsed_time)))
 
 
@@ -50,11 +53,12 @@ def main():
     level_1.create_map(width=10, height=10)
     level_1.add_player()
     level_1.add_enemy(Position(1, 1))
+    level_1.add_enemy(Position(3, 11))
     level_1.add_item(HEART, Position(1, 2))
     level_1.add_structure(WALL, Position(2, 2))
     level_1.add_structure(WALL, Position(3, 2))
-    level_1.add_structure(FLOOR, Position(4, 5), collition=False)
-    level_1.add_structure(FLOOR, Position(3, 5), collition=False)
+    level_1.add_structure(FLOOR, Position(4, 5), collision=False)
+    level_1.add_structure(FLOOR, Position(3, 5), collision=False)
     inventory = Inventory()
     play(level_1, inventory)
 

@@ -61,21 +61,19 @@ class Level:
         for key in self.elements:
             element = self.elements[key]
             if isinstance(element, Enemy):
-                direction = DIRECTIONS[4] if random.random() < 0.9 else random.choice(
-                    DIRECTIONS[:4] + DIRECTIONS[5:])  # 50% chance to move
-                if direction in ENEMY_SPRITES:
-                    element.skin = ENEMY_SPRITES[direction]
+                direction = random.choice(DIRECTIONS)
+                element.skin = ENEMY_SPRITES[direction]
+                self.map.add_element(element, element.position)
+
+                next_position = element.position + direction
+                next_position = self.map.adjust_position_within_bounds(next_position)
+                next_element  = self.map.get_element(next_position)
+
+                if not next_element.collision:
+                    self.map.add_element(element.on_top_of, element.position)
+                    element.position = next_position
+                    element.on_top_of = next_element
                     self.map.add_element(element, element.position)
 
-                    next_position = element.position + direction
-                    next_position = self.map.adjust_position_within_bounds(next_position)
-                    next_element  = self.map.get_element(next_position)
-
-                    if not next_element.collision:
-                        self.map.add_element(element.on_top_of, element.position)
-                        element.position = next_position
-                        element.on_top_of = next_element
-                        self.map.add_element(element, element.position)
-
-    def show(self):
-        self.map.show()
+    def __str__(self):
+        return str(self.map)

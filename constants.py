@@ -24,7 +24,7 @@ HEART  = '♥'
 NUM_ITEMS = 5
 
 # DIRECTIONS
-DIRECTIONS = [(-1, 0), (1, 0), (0, -1), (0, 1), (0, 0)]
+DIRECTIONS = [(-1, 0), (1, 0), (0, -1), (0, 1)]
 
 # PLAYER_MOVEMENTS
 PLAYER_MOVEMENTS = {

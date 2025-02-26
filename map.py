@@ -19,17 +19,19 @@ class Map:
         return self.width, self.height
 
     def _print_top(self):
-        print("┏" + "━" * self.width + "┓")
+        return "┏" + "━" * self.width + "┓"
 
     def _print_bottom(self):
-        print("┗" + "━" * self.width + "┛")
+        return "┗" + "━" * self.width + "┛"
 
-    def show(self):
+    def __str__(self):
         """Print the map."""
-        self._print_top()
+        result = self._print_top()
         for row in self.matrix:
-            print("┃" + "".join(element.skin for element in row) + "┃")
-        self._print_bottom()
+            result += "┃" + "".join(element.skin for element in row) + "┃" + "\n"
+        result += self._print_bottom()
+
+        return result
 
     def out_of_bounds(self, position: Position) -> bool:
         """Check if the position is out of bounds."""

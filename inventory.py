@@ -16,7 +16,7 @@ class Inventory:
     def get_items(self) -> list[Element]:
         return self.items
 
-    def show(self):
+    def __str__(self):
         top, mid, bottom = "", "", ""
         for i, item in enumerate(self.items):
             if i == self.selected_item:
@@ -28,6 +28,4 @@ class Inventory:
                 mid += f"│ {item} │"
                 bottom += "└───┘"
 
-        print(top)
-        print(mid)
-        print(bottom)
+        return top + "\n" + mid + "\n" + bottom

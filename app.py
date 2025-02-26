@@ -9,19 +9,32 @@ from level import Level
 from position import Position
 
 
-def play(level, inventory):
-
-    frame_duration = 1 / 10  # Duration of each frame for 30fps
+def update_view(level, inventory):
     utils.clear_console()
-    level.show()
-    inventory.show()
+    print(str(level))
+    print(str(inventory))
+
+
+def play(level, inventory):
+    update_view(level, inventory)
+    frame_duration = 1 / 10  # Duration of each frame for 10fps
+    enemy_velocity = 1
+    player_velocity = 0.25
+    enemy_start_time = time.time()
+    player_start_time = time.time()
 
     while True:
-        start_time = time.time()
-        level.move_enemies()
-        for key in PLAYER_MOVEMENTS:
-            if keyboard.is_pressed(key):
-                level.move_player(key)
+        current_time = time.time()
+
+        if current_time - enemy_start_time >= enemy_velocity:
+            level.move_enemies()
+            enemy_start_time = current_time
+
+        if current_time - player_start_time >= player_velocity:
+            for key in PLAYER_MOVEMENTS:
+                if keyboard.is_pressed(key):
+                    level.move_player(key)
+                    player_start_time = current_time
 
         for key in ITEMS:
             if keyboard.is_pressed(key):
@@ -30,15 +43,10 @@ def play(level, inventory):
         if keyboard.is_pressed(EXIT):
             break
 
-        utils.clear_console()
-        level.show()
-        inventory.show()
+        update_view(level, inventory)
 
         # Calculate the time taken for this frame
-        elapsed_time = time.time() - start_time
-        print(elapsed_time)
-        print(frame_duration)
-        print(max(0, int(frame_duration - elapsed_time)))
+        elapsed_time = time.time() - current_time
         time.sleep(max(0, int(frame_duration - elapsed_time)))
 
 

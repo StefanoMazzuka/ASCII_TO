@@ -6,8 +6,13 @@ from position import Position
 
 # Inicializar Pygame
 pygame.init()
-TILE_SIZE = 40
-WIDTH, HEIGHT = 10 * TILE_SIZE, 10 * TILE_SIZE
+
+# Configuración de la fuente para determinar el tamaño exacto del carácter
+font = pygame.font.SysFont("consolas", 40)  # Ajusta el tamaño de fuente aquí
+TILE_WIDTH, TILE_HEIGHT = font.size("█")
+
+# Configuración de pantalla
+WIDTH, HEIGHT = 20 * TILE_WIDTH, 20 * TILE_HEIGHT
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 clock = pygame.time.Clock()
 
@@ -16,34 +21,23 @@ COLORS = {
     WALL: (50, 50, 50),
     FLOOR: (200, 200, 200),
     EMPTY: (255, 255, 255),
-    HEART: (255, 0, 0),
+    HEART: (255, 0, 0)
 }
-
-# Cargar sprites básicos
-player_image = pygame.Surface((TILE_SIZE, TILE_SIZE))
-player_image.fill((0, 255, 0))
-
-enemy_image = pygame.Surface((TILE_SIZE, TILE_SIZE))
-enemy_image.fill((255, 0, 0))
 
 
 def draw_map(level):
     """Dibuja el mapa en la pantalla con Pygame usando caracteres."""
     screen.fill((0, 0, 0))  # Fondo negro
 
-    # Crear una fuente (puedes ajustar el tamaño y tipo)
-    font = pygame.font.SysFont("consolas", TILE_SIZE)
-
     for y, row in enumerate(level.map.matrix):
         for x, element in enumerate(row):
-            rect = pygame.Rect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE)
+            rect = pygame.Rect(x * TILE_WIDTH, y * TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT)
 
-            # Dibujar un fondo para la celda (opcional)
+            # Dibujar un fondo para la celda
             pygame.draw.rect(screen, (255, 255, 255), rect)
             # pygame.draw.rect(screen, (0, 0, 0), rect, 1)  # Bordes
 
             # Renderizar el carácter que representa el elemento
-            # Puedes ajustar el color del texto según convenga
             text_surface = font.render(element.skin, True, (0, 0, 0))
             text_rect = text_surface.get_rect(center=rect.center)
             screen.blit(text_surface, text_rect)
@@ -71,13 +65,13 @@ def game_loop(level):
                 running = False
 
         keys = pygame.key.get_pressed()
-        if keys[RIGHT]:
+        if keys[pygame.K_d]:
             level.move_player(RIGHT)
-        elif keys[LEFT]:
+        elif keys[pygame.K_a]:
             level.move_player(LEFT)
-        elif keys[UP]:
+        elif keys[pygame.K_w]:
             level.move_player(UP)
-        elif keys[DOWN]:
+        elif keys[pygame.K_s]:
             level.move_player(DOWN)
 
         # Dibujar y actualizar la pantalla

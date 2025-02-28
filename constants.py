@@ -1,9 +1,11 @@
 # BUTTONS
-UP     = 'w'
-DOWN   = 's'
-LEFT   = 'a'
-RIGHT  = 'd'
-EXIT   = 'esc'
+import pygame
+
+UP     = pygame.K_w
+DOWN   = pygame.K_s
+LEFT   = pygame.K_a
+RIGHT  = pygame.K_d
+EXIT   = pygame.K_ESCAPE
 ITEM_1 = '1'
 ITEM_2 = '2'
 ITEM_3 = '3'

@@ -1,64 +1,104 @@
 import pygame
+import time
+from constants import *
 from level import Level
 from position import Position
-from constants import *
 
 # Inicializar Pygame
 pygame.init()
-
-# Configuración de pantalla
-WIDTH, HEIGHT = 400, 400
 TILE_SIZE = 40
+WIDTH, HEIGHT = 10 * TILE_SIZE, 10 * TILE_SIZE
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("Juego ASCII con Pygame")
-
-# Fuente para representar los caracteres ASCII
-font = pygame.font.Font(None, 40)  # Fuente predeterminada, tamaño 36
-
-# Crear nivel
-level = Level()
-level.create_map(10, 10)
-level.add_player()
-level.add_structure(WALL, Position(2, 2))
-
-# Bucle principal
-running = True
 clock = pygame.time.Clock()
 
-while running:
+# Colores de elementos
+COLORS = {
+    WALL: (50, 50, 50),
+    FLOOR: (200, 200, 200),
+    EMPTY: (255, 255, 255),
+    HEART: (255, 0, 0),
+}
+
+# Cargar sprites básicos
+player_image = pygame.Surface((TILE_SIZE, TILE_SIZE))
+player_image.fill((0, 255, 0))
+
+enemy_image = pygame.Surface((TILE_SIZE, TILE_SIZE))
+enemy_image.fill((255, 0, 0))
+
+
+def draw_map(level):
+    """Dibuja el mapa en la pantalla con Pygame usando caracteres."""
     screen.fill((0, 0, 0))  # Fondo negro
 
-    # Manejar eventos
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
+    # Crear una fuente (puedes ajustar el tamaño y tipo)
+    font = pygame.font.SysFont("consolas", TILE_SIZE)
 
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_w:
-                level.move_player(UP)
-            elif event.key == pygame.K_s:
-                level.move_player(DOWN)
-            elif event.key == pygame.K_a:
-                level.move_player(LEFT)
-            elif event.key == pygame.K_d:
-                level.move_player(RIGHT)
+    for y, row in enumerate(level.map.matrix):
+        for x, element in enumerate(row):
+            rect = pygame.Rect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE)
 
-    # Dibujar el mapa con ASCII
-    for y in range(10):
-        for x in range(10):
-            element = level.map.get_element(Position(y, x))
-            char = element.skin  # Usa el carácter ASCII correspondiente
+            # Dibujar un fondo para la celda (opcional)
+            pygame.draw.rect(screen, (255, 255, 255), rect)
+            # pygame.draw.rect(screen, (0, 0, 0), rect, 1)  # Bordes
 
-            # Renderizar el carácter con la fuente y dibujarlo en pantalla
-            text_surface = font.render(char, True, (255, 255, 255))  # Texto blanco
-            screen.blit(text_surface, (x * TILE_SIZE, y * TILE_SIZE))
+            # Renderizar el carácter que representa el elemento
+            # Puedes ajustar el color del texto según convenga
+            text_surface = font.render(element.skin, True, (0, 0, 0))
+            text_rect = text_surface.get_rect(center=rect.center)
+            screen.blit(text_surface, text_rect)
 
-    # Dibujar jugador
-    player = level.player
-    player_surface = font.render(player.skin, True, (255, 255, 255))
-    screen.blit(player_surface, (player.position.x * TILE_SIZE, player.position.y * TILE_SIZE))
 
-    pygame.display.update()
-    clock.tick(60)  # Limita el juego a 30 FPS
+def game_loop(level):
+    running = True
+    frame_duration = 1 / 10
+    enemy_velocity = 1
+    player_velocity = 0.25
+    enemy_start_time = time.time()
+    player_start_time = time.time()
 
-pygame.quit()
+    while running:
+        current_time = time.time()
+
+        # Mover enemigos
+        if current_time - enemy_start_time >= enemy_velocity:
+            level.move_enemies()
+            enemy_start_time = current_time
+
+        # Capturar eventos de Pygame
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+
+        keys = pygame.key.get_pressed()
+        if keys[RIGHT]:
+            level.move_player(RIGHT)
+        elif keys[LEFT]:
+            level.move_player(LEFT)
+        elif keys[UP]:
+            level.move_player(UP)
+        elif keys[DOWN]:
+            level.move_player(DOWN)
+
+        # Dibujar y actualizar la pantalla
+        draw_map(level)
+        pygame.display.flip()
+        clock.tick(10)
+
+    pygame.quit()
+
+
+def main():
+    level = Level()
+    level.create_map(width=10, height=10)
+    level.add_player(Position(4, 4))
+    level.add_enemy(Position(6, 6))
+    level.add_item(HEART, Position(2, 3))
+    level.add_structure(WALL, Position(5, 5))
+    level.add_structure(FLOOR, Position(6, 5), collision=False)
+
+    game_loop(level)
+
+
+if __name__ == "__main__":
+    main()

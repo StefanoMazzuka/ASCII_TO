@@ -7,13 +7,18 @@ from position import Position
 # Inicializar Pygame
 pygame.init()
 
+print(pygame.font.get_fonts())
+
 # Configuración de la fuente para determinar el tamaño exacto del carácter
-font = pygame.font.SysFont("consolas", 40)  # Ajusta el tamaño de fuente aquí
-TILE_WIDTH, TILE_HEIGHT = font.size("█")
+# font = pygame.font.SysFont("Cascadia Mono", 40)  # Ajusta el tamaño de fuente aquí
+font = pygame.font.Font("fonts/static/FiraCode-Regular.ttf", 10)
+TILE_WIDTH, TILE_HEIGHT = font.size("P")
+print(f"Tamaño de tile: {TILE_WIDTH}x{TILE_HEIGHT}")
 
 # Configuración de pantalla
 WIDTH, HEIGHT = 20 * TILE_WIDTH, 20 * TILE_HEIGHT
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
+
 clock = pygame.time.Clock()
 
 # Colores de elementos
@@ -25,11 +30,11 @@ COLORS = {
 }
 
 
-def draw_map(level):
-    """Dibuja el mapa en la pantalla con Pygame usando caracteres."""
+def draw_map(map):
+    """Dibuja el mapa en la pantalla usando caracteres."""
     screen.fill((0, 0, 0))  # Fondo negro
 
-    for y, row in enumerate(level.map.matrix):
+    for y, row in enumerate(map.matrix):
         for x, element in enumerate(row):
             rect = pygame.Rect(x * TILE_WIDTH, y * TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT)
 
@@ -64,18 +69,15 @@ def game_loop(level):
             if event.type == pygame.QUIT:
                 running = False
 
+        # Mover jugador
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_d]:
-            level.move_player(RIGHT)
-        elif keys[pygame.K_a]:
-            level.move_player(LEFT)
-        elif keys[pygame.K_w]:
-            level.move_player(UP)
-        elif keys[pygame.K_s]:
-            level.move_player(DOWN)
+        for direction in [RIGHT, LEFT, UP, DOWN]:
+            if keys[direction]:
+                level.move_player(direction)
+                break
 
         # Dibujar y actualizar la pantalla
-        draw_map(level)
+        draw_map(level.map)
         pygame.display.flip()
         clock.tick(10)
 

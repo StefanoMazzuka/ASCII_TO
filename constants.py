@@ -19,7 +19,7 @@ EMPTY  = ' '
 WALL   = '█'
 FLOOR  = '░'
 DOOR   = 'D'
-STAR   = '★'
+STAR   = '⬧'
 HEART  = '♥'
 
 # NUMBERS
@@ -45,10 +45,10 @@ PLAYER_SPRITES = {
     RIGHT: 'p'
 }
 ENEMY_SPRITES = {
-    DIRECTIONS[0]: '▴',
-    DIRECTIONS[1]: '▾',
-    DIRECTIONS[2]: '◂',
-    DIRECTIONS[3]: '▸'
+    DIRECTIONS[0]: '△',
+    DIRECTIONS[1]: '▽',
+    DIRECTIONS[2]: '◁',
+    DIRECTIONS[3]: '▷'
 }
 
 # ENTITY TYPES

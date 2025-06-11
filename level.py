@@ -5,14 +5,15 @@ from element import Element
 from enemy import Enemy
 from entity import Entity
 from map import Map
+from player import Player
 from position import Position
 
 
 class Level:
-    def __init__(self):
+    def __init__(self, player: Player = None):
         self.map = None
         self.elements = {}
-        self.player = None
+        self.player = Player if player is None else player
 
     def create_map(self, width: int, height: int):
         self.map = Map(width, height)
@@ -26,18 +27,18 @@ class Level:
         return element
 
     def add_player(self, position: Position = None):
-        self.player = self._add_element(Entity, position=position, skin=PLAYER_SPRITES[RIGHT], sprites=PLAYER_SPRITES)
+        self.player = self._add_element(Player, position=position, skin=PLAYER_SPRITES[RIGHT], sprites=PLAYER_SPRITES)
 
     def add_enemy(self, position: Position = None, health: int = 5, drops=None):
         drops = {None, 1.0} if drops is None else drops
         self._add_element(Enemy, position=position, skin=ENEMY_SPRITES[DIRECTIONS[0]], sprites=ENEMY_SPRITES,
                           health=health, drops=drops)
 
-    def add_structure(self, structure_skin: chr, position: Position = None, collision=True):
-        self._add_element(Element, position=position, skin=structure_skin, collision=collision)
+    def add_structure(self, skin: chr, position: Position = None, collision=True):
+        self._add_element(Element, position=position, skin=skin, collision=collision)
 
-    def add_item(self, item_skin: chr, position=None):
-        self._add_element(Element, position=position, skin=item_skin, pickable=True)
+    def add_item(self, skin: chr, position=None):
+        self._add_element(Element, position=position, skin=skin, pickable=True)
 
     def move_player(self, key: chr):
 
@@ -49,6 +50,11 @@ class Level:
         next_position = self.map.adjust_position_within_bounds(next_position)
 
         element = self.map.get_element(next_position)
+
+        if isinstance(element, Enemy):
+            self.player.health -= 1
+            print("Player encountered an enemy! player health:", self.player.health)
+
         if not element.collision:
             self.map.add_element(self.player.on_top_of, self.player.position)
             self.player.position = next_position
@@ -68,6 +74,10 @@ class Level:
                 next_position = element.position + direction
                 next_position = self.map.adjust_position_within_bounds(next_position)
                 next_element  = self.map.get_element(next_position)
+
+                if isinstance(next_element, Player):
+                    next_element.health -= 1
+                    print("Enemy encountered the player! Player health:", next_element.health)
 
                 if not next_element.collision:
                     self.map.add_element(element.on_top_of, element.position)

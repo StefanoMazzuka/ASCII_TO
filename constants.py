@@ -63,3 +63,10 @@ ITEMS = {
     ITEM_4: 3,
     ITEM_5: 4
 }
+
+COLORS = {
+    WALL: (50, 50, 50),
+    FLOOR: (200, 0, 200),
+    EMPTY: (255, 255, 255),
+    HEART: (255, 0, 0)
+}

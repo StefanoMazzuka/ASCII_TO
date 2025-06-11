@@ -7,11 +7,9 @@ from position import Position
 # Inicializar Pygame
 pygame.init()
 
-print(pygame.font.get_fonts())
-
 # Configuración de la fuente para determinar el tamaño exacto del carácter
 # font = pygame.font.SysFont("Cascadia Mono", 40)  # Ajusta el tamaño de fuente aquí
-font = pygame.font.Font("fonts/static/FiraCode-Regular.ttf", 10)
+font = pygame.font.Font("fonts/static/FiraCode-Regular.ttf", 20)
 TILE_WIDTH, TILE_HEIGHT = font.size("P")
 print(f"Tamaño de tile: {TILE_WIDTH}x{TILE_HEIGHT}")
 
@@ -21,29 +19,32 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT))
 
 clock = pygame.time.Clock()
 
-# Colores de elementos
-COLORS = {
-    WALL: (50, 50, 50),
-    FLOOR: (200, 200, 200),
-    EMPTY: (255, 255, 255),
-    HEART: (255, 0, 0)
-}
-
-
 def draw_map(map):
     """Dibuja el mapa en la pantalla usando caracteres."""
-    screen.fill((0, 0, 0))  # Fondo negro
+    screen.fill((0, 0, 0))  # Black background
+
+    map_width_in_px  = map.width * TILE_WIDTH
+    map_height_in_px = map.height * TILE_HEIGHT
+
+    # Calculate offsets to center the map
+    offset_x = (WIDTH - map_width_in_px) // 2
+    offset_y = (HEIGHT - map_height_in_px) // 2
 
     for y, row in enumerate(map.matrix):
         for x, element in enumerate(row):
-            rect = pygame.Rect(x * TILE_WIDTH, y * TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT)
+            rect = pygame.Rect(
+                offset_x + x * TILE_WIDTH,
+                offset_y + y * TILE_HEIGHT,
+                TILE_WIDTH,
+                TILE_HEIGHT
+            )
 
-            # Dibujar un fondo para la celda
+            # Creates a rectangle for each element
             pygame.draw.rect(screen, (255, 255, 255), rect)
             # pygame.draw.rect(screen, (0, 0, 0), rect, 1)  # Bordes
 
-            # Renderizar el carácter que representa el elemento
-            text_surface = font.render(element.skin, True, (0, 0, 0))
+            # Render the character for the element
+            text_surface = font.render(element.skin, True, COLORS.get(element.skin, (0, 0, 0)))
             text_rect = text_surface.get_rect(center=rect.center)
             screen.blit(text_surface, text_rect)
 

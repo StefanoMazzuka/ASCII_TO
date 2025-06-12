@@ -29,3 +29,6 @@ def exe_loading_animation():
     time.sleep(5)
     loading_event.clear()
     t.join()
+
+
+def save(level: Level):

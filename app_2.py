@@ -9,7 +9,7 @@ pygame.init()
 
 # Configuración de la fuente para determinar el tamaño exacto del carácter
 # font = pygame.font.SysFont("Cascadia Mono", 40)  # Ajusta el tamaño de fuente aquí
-font = pygame.font.Font("fonts/static/FiraCode-Regular.ttf", 20)
+font = pygame.font.Font("font/PressStart2P-Regular.ttf", 20)
 TILE_WIDTH, TILE_HEIGHT = font.size("P")
 print(f"Tamaño de tile: {TILE_WIDTH}x{TILE_HEIGHT}")
 
@@ -91,6 +91,8 @@ def main():
     level.add_player(Position(4, 4))
     level.add_enemy(Position(6, 6))
     level.add_item(HEART, Position(2, 3))
+    level.add_item(DIAMOND, Position(2, 4))
+    level.add_item(DIAMOND, Position(2, 30))
     level.add_structure(WALL, Position(5, 5))
     level.add_structure(FLOOR, Position(6, 5), collision=False)
 

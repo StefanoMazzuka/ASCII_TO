@@ -15,12 +15,12 @@ ITEM_5 = '5'
 BUTTONS = [UP, DOWN, LEFT, RIGHT, EXIT, ITEM_1, ITEM_2, ITEM_3, ITEM_4, ITEM_5]
 
 # CHARACTERS
-EMPTY  = ' '
-WALL   = '█'
-FLOOR  = '░'
-DOOR   = 'D'
-STAR   = '⬧'
-HEART  = '♥'
+EMPTY   = ' '
+WALL    = '█'
+FLOOR   = '░'
+DOOR    = 'D'
+DIAMOND = '♦'
+HEART   = '♥'
 
 # NUMBERS
 NUM_ITEMS = 5
@@ -45,10 +45,10 @@ PLAYER_SPRITES = {
     RIGHT: 'p'
 }
 ENEMY_SPRITES = {
-    DIRECTIONS[0]: '△',
-    DIRECTIONS[1]: '▽',
-    DIRECTIONS[2]: '◁',
-    DIRECTIONS[3]: '▷'
+    DIRECTIONS[0]: '▲',
+    DIRECTIONS[1]: '▼',
+    DIRECTIONS[2]: '◀',
+    DIRECTIONS[3]: '▶'
 }
 
 # ENTITY TYPES

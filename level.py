@@ -62,6 +62,8 @@ class Level:
 
             if not element.pickable:
                 self.player.on_top_of = element
+            else:
+                self.player.pick_up(element)
 
     def move_enemies(self):
         for key in self.elements:
@@ -75,15 +77,15 @@ class Level:
                 next_position = self.map.adjust_position_within_bounds(next_position)
                 next_element  = self.map.get_element(next_position)
 
-                if isinstance(next_element, Player):
-                    next_element.health -= 1
-                    print("Enemy encountered the player! Player health:", next_element.health)
-
                 if not next_element.collision:
                     self.map.add_element(element.on_top_of, element.position)
                     element.position = next_position
                     element.on_top_of = next_element
                     self.map.add_element(element, element.position)
+                    if isinstance(next_element, Player):
+                        next_element.health -= 1
+                        print("Enemy encountered the player! Player health:", next_element.health)
 
-    def __str__(self):
+
+def __str__(self):
         return str(self.map)

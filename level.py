@@ -1,9 +1,8 @@
 import random
 
-from constants import PLAYER_SPRITES, ENEMY_SPRITES, RIGHT, PLAYER_MOVEMENTS, DIRECTIONS
+from constants import PLAYER_SPRITES, ENEMY_SPRITES, RIGHT, PLAYER_MOVEMENTS, DIRECTIONS, DIAMOND
 from element import Element
 from enemy import Enemy
-from entity import Entity
 from map import Map
 from player import Player
 from position import Position
@@ -26,21 +25,20 @@ class Level:
 
         return element
 
-    def add_player(self, position: Position = None):
-        self.player = self._add_element(Player, position=position, skin=PLAYER_SPRITES[RIGHT], sprites=PLAYER_SPRITES)
+    def add_player(self, skin: str, position: Position = None, ):
+        self.player = self._add_element(Player, position=position, skin=skin, sprites=PLAYER_SPRITES)
 
-    def add_enemy(self, position: Position = None, health: int = 5, drops=None):
+    def add_enemy(self, skin: str, position: Position = None, health: int = 5, drops=None):
         drops = {None, 1.0} if drops is None else drops
-        self._add_element(Enemy, position=position, skin=ENEMY_SPRITES[DIRECTIONS[0]], sprites=ENEMY_SPRITES,
-                          health=health, drops=drops)
+        self._add_element(Enemy, position=position, skin=skin, sprites=ENEMY_SPRITES, health=health, drops=drops)
 
-    def add_structure(self, skin: chr, position: Position = None, collision=True):
+    def add_structure(self, skin: str, position: Position = None, collision=True):
         self._add_element(Element, position=position, skin=skin, collision=collision)
 
-    def add_item(self, skin: chr, position=None):
+    def add_item(self, skin: str, position=None):
         self._add_element(Element, position=position, skin=skin, pickable=True)
 
-    def move_player(self, key: chr):
+    def move_player(self, key: str):
 
         direction = PLAYER_MOVEMENTS[key]
         self.player.skin = PLAYER_SPRITES[key]
@@ -59,10 +57,9 @@ class Level:
             self.map.add_element(self.player.on_top_of, self.player.position)
             self.player.position = next_position
             self.map.add_element(self.player, self.player.position)
+            self.player.on_top_of = element
 
-            if not element.pickable:
-                self.player.on_top_of = element
-            else:
+            if element.pickable:
                 self.player.pick_up(element)
 
     def move_enemies(self):
@@ -88,4 +85,4 @@ class Level:
 
 
 def __str__(self):
-        return str(self.map)
+    return str(self.map)

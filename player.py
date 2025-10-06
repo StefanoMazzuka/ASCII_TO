@@ -5,17 +5,19 @@ from constants import HEART, PLAYER_SPRITES, RIGHT, PLAYER_MOVEMENTS, EMPTY
 
 
 class Player(Entity):
-    def __init__(self, position: Position, skin: chr, sprites: dict, health: int = 10):
+    def __init__(self, position: Position, skin: str, sprites: dict, health: int = 10):
         super().__init__(position, skin, sprites, collision=False)
         self.health = health
         self.bag = {}
 
     def pick_up(self, item: Element):
-
+        self.on_top_of = Element(self.on_top_of.position, EMPTY)
         if item.skin == HEART:
             self.heal_player()
         else:
             self.put_in_bag(item)
+
+        print("Life:", self.health)
 
     def heal_player(self):
         self.health += 1

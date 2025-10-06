@@ -3,6 +3,7 @@ import itertools
 import threading
 import time
 import sys
+from level import Level
 
 
 def clear_console():
@@ -32,3 +33,4 @@ def exe_loading_animation():
 
 
 def save(level: Level):
+    level.map

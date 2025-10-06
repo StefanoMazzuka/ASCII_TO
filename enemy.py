@@ -6,7 +6,7 @@ from position import Position
 
 
 class Enemy(Entity):
-    def __init__(self, position: Position, skin: chr, sprites: dict, health: int, drops: Dict[Optional[chr], float]):
+    def __init__(self, position: Position, skin: str, sprites: dict, health: int, drops: Dict[Optional[str], float]):
         super().__init__(position, skin, sprites)
         self.health = health
         self.drops  = drops

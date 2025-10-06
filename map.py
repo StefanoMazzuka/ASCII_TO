@@ -5,8 +5,8 @@ from element import Element
 
 class Map:
     def __init__(self, width: int, height: int):
-        self.width  = width + 2
-        self.height = height + 2
+        self.width  = width
+        self.height = height
         self.matrix = [[Element(Position(y, x), EMPTY) for x in range(self.width)] for y in range(self.height)]
 
         self.center_position = Position(int(self.height / 2), int(self.width / 2))

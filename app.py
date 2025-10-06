@@ -63,7 +63,7 @@ def main():
     block_keys()
     level_1 = Level()
     level_1.create_map(width=20, height=10)
-    level_1.add_player()
+    level_1.add_player("p")
     level_1.add_enemy(Position(1, 1))
     level_1.add_enemy(Position(3, 11))
     level_1.add_item(HEART, Position(1, 2))

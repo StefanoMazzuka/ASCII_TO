@@ -4,7 +4,7 @@ from element import Element
 
 
 class Entity(Element):
-    def __init__(self, position: Position, skin: chr, sprites: dict, collision: bool = True):
+    def __init__(self, position: Position, skin: str, sprites: dict, collision: bool = True):
         super().__init__(position, skin, collision)
         self.sprites   = sprites
         self.on_top_of = Element(position, EMPTY)

@@ -9,7 +9,7 @@ pygame.init()
 
 # Configuración de la fuente para determinar el tamaño exacto del carácter
 # font = pygame.font.SysFont("Cascadia Mono", 40)  # Ajusta el tamaño de fuente aquí
-font = pygame.font.Font("font/PressStart2P-Regular.ttf", 20)
+font = pygame.font.Font("resources/font/PressStart2P-Regular.ttf", 20)
 TILE_WIDTH, TILE_HEIGHT = font.size("P")
 print(f"Tamaño de tile: {TILE_WIDTH}x{TILE_HEIGHT}")
 
@@ -18,6 +18,7 @@ WIDTH, HEIGHT = 20 * TILE_WIDTH, 20 * TILE_HEIGHT
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 
 clock = pygame.time.Clock()
+
 
 def draw_map(map):
     """Dibuja el mapa en la pantalla usando caracteres."""
@@ -41,7 +42,7 @@ def draw_map(map):
 
             # Creates a rectangle for each element
             pygame.draw.rect(screen, (255, 255, 255), rect)
-            # pygame.draw.rect(screen, (0, 0, 0), rect, 1)  # Bordes
+            pygame.draw.rect(screen, (0, 0, 0), rect, 1)  # Bordes
 
             # Render the character for the element
             text_surface = font.render(element.skin, True, COLORS.get(element.skin, (0, 0, 0)))
@@ -92,9 +93,13 @@ def main():
     level.add_enemy(Position(6, 6))
     level.add_item(HEART, Position(2, 3))
     level.add_item(DIAMOND, Position(2, 4))
-    level.add_item(DIAMOND, Position(2, 30))
+    level.add_item(DIAMOND, Position(2, 11))
     level.add_structure(WALL, Position(5, 5))
     level.add_structure(FLOOR, Position(6, 5), collision=False)
+
+    # print(level.map.matrix[2][11].skin)
+    # print(level.map.matrix[2][11].collision)
+    # print(level.map.matrix[2][11].pickable)
 
     game_loop(level)
 

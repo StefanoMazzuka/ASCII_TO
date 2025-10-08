@@ -11,7 +11,7 @@ class Map:
 
         self.center_position = Position(int(self.height / 2), int(self.width / 2))
 
-        self.create_bounds()
+        # self.create_bounds()
 
     def add_element(self, element: Element, position: Position):
         """Insert an element in the map and return the position."""
@@ -35,24 +35,25 @@ class Map:
     #
     #     return result
 
-    def create_bounds(self):
-        """Create bounds for the map."""
-        self.matrix[0][0]                            = Element(Position(0, 0), "┏")
-        self.matrix[0][self.width - 1]               = Element(Position(0, self.width - 1), "┓")
-        self.matrix[self.height - 1][0]              = Element(Position(self.height - 1, 0), "┗")
-        self.matrix[self.height - 1][self.width - 1] = Element(Position(self.height - 1, self.width - 1), "┛")
-
-        for y in range(1, self.height - 1):
-            self.matrix[y][0] = Element(Position(y, 0), "┃", collision=True)
-            self.matrix[y][self.width - 1] = Element(Position(y, self.width - 1), "┃", collision=True)
-
-        for x in range(1, self.width - 1):
-            self.matrix[0][x] = Element(Position(0, x), "━", collision=True)
-            self.matrix[self.height - 1][x] = Element(Position(self.height - 1, x), "━", collision=True)
+    # def create_bounds(self):
+    #     """Create bounds for the map."""
+    #     self.matrix[0][0]                            = Element(Position(0, 0), "┏")
+    #     self.matrix[0][self.width - 1]               = Element(Position(0, self.width - 1), "┓")
+    #     self.matrix[self.height - 1][0]              = Element(Position(self.height - 1, 0), "┗")
+    #     self.matrix[self.height - 1][self.width - 1] = Element(Position(self.height - 1, self.width - 1), "┛")
+    #
+    #     for y in range(1, self.height - 1):
+    #         self.matrix[y][0] = Element(Position(y, 0), "┃", collision=True)
+    #         self.matrix[y][self.width - 1] = Element(Position(y, self.width - 1), "┃", collision=True)
+    #
+    #     for x in range(1, self.width - 1):
+    #         self.matrix[0][x] = Element(Position(0, x), "━", collision=True)
+    #         self.matrix[self.height - 1][x] = Element(Position(self.height - 1, x), "━", collision=True)
 
     def out_of_bounds(self, position: Position) -> bool:
         """Check if the position is out of bounds."""
-        return not (0 <= position.y < self.height and 0 <= position.x < self.width)
+        return (0 > position.y or position.y >= self.height or
+                0 > position.x or position.x >= self.width)
 
     def adjust_position_within_bounds(self, position: Position) -> Position:
         """Adjust the position to be within the bounds of the map."""

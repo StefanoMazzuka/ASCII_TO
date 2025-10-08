@@ -8,9 +8,10 @@ from position import Position
 pygame.init()
 
 # Configuración de la fuente para determinar el tamaño exacto del carácter
-# font = pygame.font.SysFont("Cascadia Mono", 40)  # Ajusta el tamaño de fuente aquí
-font = pygame.font.Font("resources/font/PressStart2P-Regular.ttf", 20)
+font = pygame.font.SysFont("Consolas", 20)  # Ajusta el tamaño de fuente aquí
+# font = pygame.font.Font("resources/font/PressStart2P-Regular.ttf", 20)
 TILE_WIDTH, TILE_HEIGHT = font.size("P")
+# TILE_WIDTH = TILE_HEIGHT
 print(f"Tamaño de tile: {TILE_WIDTH}x{TILE_HEIGHT}")
 
 # Configuración de pantalla
@@ -42,7 +43,7 @@ def draw_map(map):
 
             # Creates a rectangle for each element
             pygame.draw.rect(screen, (255, 255, 255), rect)
-            pygame.draw.rect(screen, (0, 0, 0), rect, 1)  # Bordes
+            # pygame.draw.rect(screen, (0, 0, 0), rect, 1)  # Bordes
 
             # Render the character for the element
             text_surface = font.render(element.skin, True, COLORS.get(element.skin, (0, 0, 0)))
